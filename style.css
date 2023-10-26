@@ -22,7 +22,7 @@ canvas {
     justify-content: space-between;
 
     font-family: arcadeType;
-    font-size: 20px;
+    font-size: 50px;
     color: rgb(0, 126, 255);
 
     padding-left: 10px;
@@ -38,11 +38,13 @@ canvas {
 }
 
 #gameover {
+    color: red;
     position: absolute;
     font-family: arcadeType;
-    font-size: 70px;
-    top: 360px;
-    left: 345px;
+    font-size: 150px;
+    line-height: 60%;
+    top: 335px;
+    left: 348px;
     justify-self: center;
 }
 

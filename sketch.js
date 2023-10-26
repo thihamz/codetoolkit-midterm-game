@@ -1,4 +1,4 @@
-let timeLimit = 3;
+let timeLimit = 10;
 let countDown;
 let gameOver;
 let score = 0;
@@ -23,12 +23,13 @@ function setup() {
     world.gravity.y = 0;
     world.gravity.x = 0;
 
- // FOOD SPRITES
- for (i = 0; i < 20; i++) {
-    food = new Sprite(random(width*0.4, width*0.7), random(height*0.3, height*0.7), 40);
-    food.color = "#F44336";
-    foodArray.push(food);
-}
+    // FOOD SPRITES
+    for (i = 0; i < 10; i++) {
+        food = new Sprite(random(width * 0.4, width * 0.7), random(height * 0.3, height * 0.7), 40);
+        food.img = "images/ketchup.png"
+        food.color = "#F44336";
+        foodArray.push(food);
+    }
 
     //player
     player = new Sprite();
@@ -50,18 +51,27 @@ function setup() {
     floor = new walls.Sprite(width / 2, height, 1000, 1);
     leftWall = new walls.Sprite(0, height / 2, 1, 800);
     rightWall = new walls.Sprite(width, height / 2, 1, 800);
-}  
+}
 
-function cleanDish(player, food) {
-    food.remove();
+// function cleanDish(player, food) {
+//     food.remove();
+// }
+function cleanDish(player, foodItem) {
+    // Remove the food item from the canvas
+    let index = foodArray.indexOf(foodItem);
+    if (index !== -1) {
+        foodArray.splice(index, 1);
+        foodItem.remove(); // Assuming you have a remove() method in your Sprite class
+        score++; // Increment the score
+    }
 }
 
 function draw() {
     clear();
     // sink = loadImage('images/sink-bg.png');
 
-    player.moveTowards(mouse);
-    
+    // player.moveTowards(mouse);
+
 
     //TIMER
     HTMLCountdown = document.getElementById("countdown");
@@ -74,33 +84,25 @@ function draw() {
     HTMLCountdown.innerText = `Time: ${countDown}`;
 
     //GAMEOVER
-    if(countDown === 0){
+    if (countDown === 0) {
         HTMLGameover.innerText = `Game Over`;
-        remove(foodItem);
+        remove();
     }
 
 
     //SCORE
     cleanPoints = score;
-    HTMLCleanpoints.innerText = `Score: ${cleanPoints}`;
- // Check for overlaps between player and food items in the foodArray
- 
- for (let i = foodArray.length - 1; i >= 0; i--) {
-    let foodItem = foodArray[i];
-    if (player.overlap(foodItem)) {
-        // Player and food[i] overlap, update the score and remove the food item
-        cleanDish(player, foodItem);
-    }
-}
+    HTMLCleanpoints.innerText = `Score: ${cleanPoints}`
+    // Check for overlaps between player and food items in the foodArray
 
-    //  for (let i = 0; i < food.length; i++) {
-    //     if (player.collide(food[i])) {
-    //         cleanDish(player, food[i]);
-    //         cleanPoints++; // Increment the score when food is removed
-    //     }
-    // }
-   
-    
+    for (let i = foodArray.length - 1; i >= 0; i--) {
+        let foodItem = foodArray[i];
+        if (player.overlap(foodItem)) {
+            // Player and food[i] overlap, update the score and remove the food item
+            cleanDish(player, foodItem);
+        }
+    }
+
 
     console.log(cleanPoints);
 
@@ -110,33 +112,33 @@ function draw() {
     fill("rgb(230,230,230)");
     circle(width / 2, height / 2, 450);
 
-   
+
 
 }
 
-// function keyPressed() {
-//     if (keyCode === UP_ARROW && keyIsPressed) {
-//         // y -= 10;
-//         player.move(50, "up", speed);
-//         if (kb.presses("up")) player.rotateTo(0, 10);
-//     }
-//     if (keyCode === DOWN_ARROW && keyIsPressed) {
-//         // y += 10;
-//         player.move(50, "down", speed);
-//     }
-//     if (keyCode === RIGHT_ARROW && keyIsPressed) {
-//         // x += 10;
-//         player.move(50, "right", speed);
-//         if (kb.presses("right")) player.rotateTo(90, 10);
-//     }
+function keyPressed() {
+    if (keyCode === UP_ARROW && keyIsPressed) {
+        // y -= 10;
+        player.move(50, "up", speed);
+        if (kb.presses("up")) player.rotateTo(0, 10);
+    }
+    if (keyCode === DOWN_ARROW && keyIsPressed) {
+        // y += 10;
+        player.move(50, "down", speed);
+    }
+    if (keyCode === RIGHT_ARROW && keyIsPressed) {
+        // x += 10;
+        player.move(50, "right", speed);
+        if (kb.presses("right")) player.rotateTo(90, 10);
+    }
 
-//     if (keyCode === LEFT_ARROW && keyIsPressed) {
-//         // x -= 10;
-//         player.move(50, "left", speed);
+    if (keyCode === LEFT_ARROW && keyIsPressed) {
+        // x -= 10;
+        player.move(50, "left", speed);
 
-//         if (kb.presses("left")) player.rotateTo(-90, 10);
-//     }
-// }
+        if (kb.presses("left")) player.rotateTo(-90, 10);
+    }
+}
 
 // function getPoints() {
 //     // score = +1
