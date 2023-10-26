@@ -1,0 +1,49 @@
+@font-face {
+    font-family: arcadeType;
+    src: url('typeface/arcade-classic.ttf');
+  }
+  
+  html, body {
+    margin: 0;
+    padding: 0;
+  }
+  canvas {
+    display: block;
+    background: none;
+  }
+  
+  #topnav{
+    position: fixed;
+    display: flex;
+    z-index: 4;
+    flex-direction: column;
+    justify-content: space-between;
+    
+    font-family: arcadeType;
+    font-size: 20px;
+    color: rgb(0,126,255); 
+    
+    padding-left: 10px;
+    padding-top: 10px;
+  }
+  
+  #name {
+    z-index: 4;
+  }
+  
+  #countdown{
+    z-index: 4;
+  }
+  
+  #gameover{
+    position: absolute;
+    font-family: arcadeType;
+    font-size: 50px;
+    top: 50%;
+    left: 40%;
+    justify-content: center;
+    
+    
+    
+  }
+  
