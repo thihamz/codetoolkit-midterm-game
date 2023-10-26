@@ -52,8 +52,13 @@ function setup() {
     rightWall = new walls.Sprite(width, height / 2, 1, 800);
 }  
 
-function cleanDish(player, food) {
-    food.remove();
+function cleanDish(player, foodItem) {
+    // Remove the food item from the canvas
+    let index = foodArray.indexOf(foodItem);
+    if (index !== -1) {
+        foodArray.splice(index, 1);
+        foodItem.remove(); // Assuming you have a remove() method in your Sprite class
+    }
 }
 
 function draw() {
@@ -82,13 +87,24 @@ function draw() {
     //SCORE
     cleanPoints = score;
     HTMLCleanpoints.innerText = `Score: ${cleanPoints}`;
+ // Check for overlaps between player and food items in the foodArray
 
-     for (let i = 0; i < food.length; i++) {
-        if (player.collide(food[i])) {
-            cleanDish(player, food[i]);
-            cleanPoints++; // Increment the score when food is removed
-        }
+ for (let i = 0; i < foodArray.length; i++) {
+    let foodItem = foodArray[i];
+    if (player.overlap(foodItem)) {
+        // Player and food[i] overlap, update the score and remove the food item
+        cleanDish(player, foodItem);
+        cleanPoints++; // Increment the score when food is removed
     }
+}
+
+
+    //  for (let i = 0; i < food.length; i++) {
+    //     if (player.collide(food[i])) {
+    //         cleanDish(player, food[i]);
+    //         cleanPoints++; // Increment the score when food is removed
+    //     }
+    // }
    
     
 
