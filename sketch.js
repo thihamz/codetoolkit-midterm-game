@@ -1,4 +1,4 @@
-let timeLimit = 1;
+let timeLimit = 3;
 let countDown;
 let gameOver;
 let score = 0;
@@ -52,52 +52,46 @@ function setup() {
     rightWall = new walls.Sprite(width, height / 2, 1, 800);
 }  
 
-function cleanDish(player, foodItem) {
-    // Remove the food item from the canvas
-    let index = foodArray.indexOf(foodItem);
-    if (index !== -1) {
-        foodArray.splice(index, 1);
-        foodItem.remove(); // Assuming you have a remove() method in your Sprite class
-    }
+function cleanDish(player, food) {
+    food.remove();
 }
 
 function draw() {
     clear();
     // sink = loadImage('images/sink-bg.png');
-    background('grey');
 
     player.moveTowards(mouse);
     
 
-    //  TIMER
+    //TIMER
     HTMLCountdown = document.getElementById("countdown");
     HTMLGameover = document.getElementById("gameover");
     HTMLCleanpoints = document.getElementById("cleanpoints");
     let currentTime = int(millis() / 1000);
 
-    countDown = timeLimit - currentTime;
+    // countDown = timeLimit - currentTime;
+    countDown = max(0, timeLimit - int(millis() / 1000));
     HTMLCountdown.innerText = `Time: ${countDown}`;
 
-    // gameOver = countDown === 0;
-    if (countDown === 0) {
+    //GAMEOVER
+    if(countDown === 0){
         HTMLGameover.innerText = `Game Over`;
-        // text("GAME OVER", width / 2, height / 2);
+        remove(foodItem);
     }
+
 
     //SCORE
     cleanPoints = score;
     HTMLCleanpoints.innerText = `Score: ${cleanPoints}`;
  // Check for overlaps between player and food items in the foodArray
-
- for (let i = 0; i < foodArray.length; i++) {
+ 
+ for (let i = foodArray.length - 1; i >= 0; i--) {
     let foodItem = foodArray[i];
     if (player.overlap(foodItem)) {
         // Player and food[i] overlap, update the score and remove the food item
         cleanDish(player, foodItem);
-        cleanPoints++; // Increment the score when food is removed
     }
 }
-
 
     //  for (let i = 0; i < food.length; i++) {
     //     if (player.collide(food[i])) {
