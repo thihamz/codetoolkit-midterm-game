@@ -1,11 +1,12 @@
-let timeLimit = 5;
+let timeLimit = 1;
 let countDown;
 let gameOver;
 let score = 0;
 let cleanPoints;
+let sink; 
 
 let speed = 5;
-let x = 300;
+let x = 500;
 let y = 600;
 
 let arcadeType;
@@ -14,15 +15,15 @@ function preload() {
 }
 
 function setup() {
-    createCanvas(600, 600);
+    createCanvas(1000, 800);
 
     world.gravity.y = 0;
     world.gravity.x = 0;
 
     //player
     player = new Sprite();
-    player.width = 50;
-    player.height = 80;
+    player.width = 123;
+    player.height = 200;
     player.color = "#9C27B0";
     player.img = "images/hand.png";
     player.x = x;
@@ -76,7 +77,8 @@ function setup() {
 
 function draw() {
     clear();
-    background("orange");
+    sink = loadImage('images/sink-bg.png');
+    background(sink);
 
     //  TIMER
     HTMLCountdown = document.getElementById("countdown");
@@ -86,12 +88,10 @@ function draw() {
 
     countDown = timeLimit - currentTime;
     HTMLCountdown.innerText = `Time: ${countDown}`;
-    console.log(countDown);
 
-    gameOver = countDown === 0;
-    if (countDown < 0) {
+    // gameOver = countDown === 0;
+    if (countDown === 0) {
         HTMLGameover.innerText = `Game Over`;
-        countDown = 0;
         // text("GAME OVER", width / 2, height / 2);
     }
 
@@ -99,7 +99,7 @@ function draw() {
     cleanPoints = score;
     HTMLCleanpoints.innerText = `Score: ${cleanPoints}`;
     if (player.collide(virus1, getPoints)) cleanPoints++;
-    
+
     console.log(cleanPoints);
 
     //PLATE
