@@ -1,49 +1,47 @@
 @font-face {
     font-family: arcadeType;
     src: url('typeface/arcade-classic.ttf');
-  }
-  
-  html, body {
+}
+
+html,
+body {
     margin: 0;
     padding: 0;
-  }
-  canvas {
+}
+
+canvas {
     display: block;
     background: none;
-  }
-  
-  #topnav{
+}
+
+#topnav {
     position: fixed;
     display: flex;
     z-index: 4;
     flex-direction: column;
     justify-content: space-between;
-    
+
     font-family: arcadeType;
     font-size: 20px;
-    color: rgb(0,126,255); 
-    
+    color: rgb(0, 126, 255);
+
     padding-left: 10px;
     padding-top: 10px;
-  }
-  
-  #name {
+}
+
+#name {
     z-index: 4;
-  }
-  
-  #countdown{
+}
+
+#countdown {
     z-index: 4;
-  }
-  
-  #gameover{
+}
+
+#gameover {
     position: absolute;
     font-family: arcadeType;
     font-size: 50px;
-    top: 50%;
-    left: 40%;
+    top: 300px;
+    left: 150px;
     justify-content: center;
-    
-    
-    
-  }
-  
+}
