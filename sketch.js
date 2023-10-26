@@ -1,4 +1,4 @@
-let timeLimit = 10;
+let timeLimit = 5;
 let countDown;
 let gameOver;
 let score = 0;
@@ -6,15 +6,28 @@ let cleanPoints;
 let sink;
 let player;
 let foodArray = [];
+let foodArray2 = []
+let winSound;
+let loseSound;
+let scrubSound;
+
 
 let speed = 5;
 let x = 500;
-let y = 600;
+let y = 700;
 
 let arcadeType;
 function preload() {
     arcadeType = loadFont("typeface/arcade-classic.ttf");
 
+    soundFormats('mp3');
+    cheerSound = loadSound('sounds/cheerSound.mp3');
+
+    soundFormats('mp3');
+    loseSound = loadSound('sounds/loseSound.mp3');
+
+    soundFormats('mp3');
+    scrubSound = loadSound('sounds/scrubSound.mp3')
 }
 
 function setup() {
@@ -63,6 +76,7 @@ function cleanDish(player, foodItem) {
         foodArray.splice(index, 1);
         foodItem.remove(); // Assuming you have a remove() method in your Sprite class
         score++; // Increment the score
+        scrubSound.play();
     }
 }
 
@@ -77,6 +91,7 @@ function draw() {
     HTMLCountdown = document.getElementById("countdown");
     HTMLGameover = document.getElementById("gameover");
     HTMLCleanpoints = document.getElementById("cleanpoints");
+    HTMLYouwin = document.getElementById("youwin");\
     let currentTime = int(millis() / 1000);
 
     // countDown = timeLimit - currentTime;
@@ -87,8 +102,15 @@ function draw() {
     if (countDown === 0) {
         HTMLGameover.innerText = `Game Over`;
         remove();
+        loseSound.play();
     }
 
+    //YOU WIN
+    if(score === 10){
+        HTMLYouwin.innerText = 'YOU WIN';
+        remove();
+        cheerSound.play();
+    }
 
     //SCORE
     cleanPoints = score;
@@ -100,9 +122,9 @@ function draw() {
         if (player.overlap(foodItem)) {
             // Player and food[i] overlap, update the score and remove the food item
             cleanDish(player, foodItem);
+            
         }
     }
-
 
     console.log(cleanPoints);
 
@@ -111,9 +133,6 @@ function draw() {
     circle(width / 2, height / 2, 600);
     fill("rgb(230,230,230)");
     circle(width / 2, height / 2, 450);
-
-
-
 }
 
 function keyPressed() {
