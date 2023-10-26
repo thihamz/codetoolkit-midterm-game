@@ -3,7 +3,8 @@ let countDown;
 let gameOver;
 let score = 0;
 let cleanPoints;
-let sink; 
+let sink;
+let food;
 
 let speed = 5;
 let x = 500;
@@ -25,22 +26,32 @@ function setup() {
     player.width = 123;
     player.height = 200;
     player.color = "#9C27B0";
-    player.img = "images/hand.png";
+    // player.img = "images/hand.png";
     player.x = x;
     player.y = y;
     player.rotationLock = true;
-    player.debug = mouse.pressing();
 
-    //VIRUS SPRITES
-    for (i = 0; i < 10; i++) {
-        virus1 = new Sprite(random(width * 0.4, width * 0.6), 300, 50, 25);
-        virus1.color = "#F44336";
 
-        virus2 = new Sprite(random(width * 0.4, width * 0.6), 300, 30);
-        virus2.color = "#03A9F4";
+    // //FOOD SPRITES GROUP
+    for(i = 0; i < 10; i++){
+        food = new Group();
+        food.diameter = 30;
+        food.x = () => random(200, 800);
+        food.y = () => random(100, 500);
+        food.amount = 80;
+    }
 
-        virus3 = new Sprite(random(width * 0.4, width * 0.6), 300, 30, 50);
-        virus3.color = "#FFEB3B";
+    // //FOOD SPRITES
+    // for (i = 0; i < 10; i++) {
+    //     virus1 = new Sprite(random(200, 800), random(100, 500), 50, 25);
+    //     virus1.color = "#F44336";
+
+    //     virus2 = new Sprite(random(width * 0.4, width * 0.6), 300, 30);
+    //     virus2.color = "#03A9F4";
+
+    //     virus3 = new Sprite(random(width * 0.4, width * 0.6), 300, 30, 50);
+    //     virus3.color = "#FFEB3B";
+
 
         // ROTATIONS
         //     if (random(2) < 1) {
@@ -63,7 +74,9 @@ function setup() {
         //       dir = -1;
         //     }
         //     virus3.rotationSpeed = 3 * dir;
-    }
+    // }
+
+    player.overlaps(virus1, cleanDish);
 
     // BOUNDING BOX
     walls = new Group();
@@ -72,13 +85,18 @@ function setup() {
     floor = new walls.Sprite(width / 2, height, 600, 1);
     leftWall = new walls.Sprite(0, height / 2, 1, 600);
     rightWall = new walls.Sprite(width, height / 2, 1, 600);
+}  
 
+function cleanDish() {
+    virus1.remove();
 }
 
 function draw() {
     clear();
     sink = loadImage('images/sink-bg.png');
     background(sink);
+
+    player.moveTowards(mouse);
 
     //  TIMER
     HTMLCountdown = document.getElementById("countdown");
@@ -108,32 +126,31 @@ function draw() {
     fill("rgb(230,230,230)");
     circle(width / 2, height / 2, 450);
 
-
 }
 
-function keyPressed() {
-    if (keyCode === UP_ARROW && keyIsPressed) {
-        // y -= 10;
-        player.move(30, "up", speed);
-        if (kb.presses("up")) player.rotateTo(0, 10);
-    }
-    if (keyCode === DOWN_ARROW && keyIsPressed) {
-        // y += 10;
-        player.move(30, "down", speed);
-    }
-    if (keyCode === RIGHT_ARROW && keyIsPressed) {
-        // x += 30;
-        player.move(30, "right", speed);
-        if (kb.presses("right")) player.rotateTo(90, 10);
-    }
+// function keyPressed() {
+//     if (keyCode === UP_ARROW && keyIsPressed) {
+//         // y -= 10;
+//         player.move(50, "up", speed);
+//         if (kb.presses("up")) player.rotateTo(0, 10);
+//     }
+//     if (keyCode === DOWN_ARROW && keyIsPressed) {
+//         // y += 10;
+//         player.move(50, "down", speed);
+//     }
+//     if (keyCode === RIGHT_ARROW && keyIsPressed) {
+//         // x += 10;
+//         player.move(50, "right", speed);
+//         if (kb.presses("right")) player.rotateTo(90, 10);
+//     }
 
-    if (keyCode === LEFT_ARROW && keyIsPressed) {
-        // x -= 10;
-        player.move(30, "left", speed);
+//     if (keyCode === LEFT_ARROW && keyIsPressed) {
+//         // x -= 10;
+//         player.move(50, "left", speed);
 
-        if (kb.presses("left")) player.rotateTo(-90, 10);
-    }
-}
+//         if (kb.presses("left")) player.rotateTo(-90, 10);
+//     }
+// }
 
 function getPoints() {
     // score = +1
