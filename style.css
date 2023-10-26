@@ -39,24 +39,26 @@ canvas {
 
 #gameover {
     color: red;
+    -webkit-text-stroke-width: 3px;
+    -webkit-text-stroke-color: black;
     position: absolute;
     font-family: arcadeType;
     font-size: 150px;
     line-height: 60%;
     top: 335px;
     left: 348px;
-    justify-self: center;
 }
 
 #youwin {
     color: rgb(135, 211, 22) ;
+    -webkit-text-stroke-width: 3px;
+    -webkit-text-stroke-color: black;
     position: absolute;
     font-family: arcadeType;
     font-size: 150px;
     line-height: 60%;
     top: 335px;
-    left: 348px;
-    justify-self: center;
+    left: 380px;
 }
 
 #bg {

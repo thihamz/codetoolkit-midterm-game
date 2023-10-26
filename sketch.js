@@ -19,13 +19,10 @@ let y = 700;
 let arcadeType;
 function preload() {
     arcadeType = loadFont("typeface/arcade-classic.ttf");
-
     soundFormats('mp3');
     cheerSound = loadSound('sounds/cheerSound.mp3');
-
     soundFormats('mp3');
     loseSound = loadSound('sounds/loseSound.mp3');
-
     soundFormats('mp3');
     scrubSound = loadSound('sounds/scrubSound.mp3')
 }
@@ -37,14 +34,15 @@ function setup() {
     world.gravity.x = 0;
 
     // FOOD SPRITES
-    for (i = 0; i < 10; i++) {
+    for (i = 0; i < 15; i++) {
         food = new Sprite(random(width * 0.4, width * 0.7), random(height * 0.3, height * 0.7), 40);
         food.img = "images/ketchup.png"
         food.color = "#F44336";
         foodArray.push(food);
+        tint(255, 200); // Display at half opacity
     }
 
-    //player
+    //PLAYER
     player = new Sprite();
     player.width = 100;
     player.height = 180;
@@ -91,7 +89,7 @@ function draw() {
     HTMLCountdown = document.getElementById("countdown");
     HTMLGameover = document.getElementById("gameover");
     HTMLCleanpoints = document.getElementById("cleanpoints");
-    HTMLYouwin = document.getElementById("youwin");\
+    HTMLYouwin = document.getElementById("youwin");
     let currentTime = int(millis() / 1000);
 
     // countDown = timeLimit - currentTime;
@@ -106,7 +104,7 @@ function draw() {
     }
 
     //YOU WIN
-    if(score === 10){
+    if(score === 15){
         HTMLYouwin.innerText = 'YOU WIN';
         remove();
         cheerSound.play();
