@@ -4,7 +4,8 @@ let gameOver;
 let score = 0;
 let cleanPoints;
 let sink;
-let food;
+let player;
+let foodArray = [];
 
 let speed = 5;
 let x = 500;
@@ -22,60 +23,25 @@ function setup() {
     world.gravity.y = 0;
     world.gravity.x = 0;
 
+ // FOOD SPRITES
+ for (i = 0; i < 20; i++) {
+    food = new Sprite(random(width*0.4, width*0.7), random(height*0.3, height*0.7), 40);
+    food.color = "#F44336";
+    foodArray.push(food);
+}
+
     //player
     player = new Sprite();
-    player.width = 123;
-    player.height = 200;
+    player.width = 100;
+    player.height = 180;
     player.color = "#9C27B0";
     player.img = "images/hand.png";
     player.x = x;
     player.y = y;
     player.rotationLock = true;
 
-    // //FOOD SPRITES GROUP
-    //     food = new Group();
-    //     food.diameter = 30;
-    //     food.x = () => random(200, 800);
-    //     food.y = () => random(100, 500);
-    //     food.amount = 80;
 
-    
-    // FOOD SPRITES
-    for (i = 0; i < 10; i++) {
-        virus1 = new Sprite(random(200, 800), random(100, 500), 50, 25);
-        virus1.color = "#F44336";
-
-        virus2 = new Sprite(random(width * 0.4, width * 0.6), 300, 30);
-        virus2.color = "#03A9F4";
-
-        virus3 = new Sprite(random(width * 0.4, width * 0.6), 300, 30, 50);
-        virus3.color = "#FFEB3B";
-    }
-
-        // ROTATIONS
-        //     if (random(2) < 1) {
-        //       dir = 1;
-        //     } else {
-        //       dir = -1;
-        //     }
-        //     virus1.rotationSpeed = 2 * dir;
-
-        //     if (random(2) < 1) {
-        //       dir = 1;
-        //     } else {
-        //       dir = -1;
-        //     }
-        //     virus2.rotationSpeed = 1 * dir;
-
-        //     if (random(2) < 1) {
-        //       dir = 1;
-        //     } else {
-        //       dir = -1;
-        //     }
-        //     virus3.rotationSpeed = 3 * dir;
-    // }
-
-    // player.overlaps(virus1, cleanDish);
+    player.overlaps(food, cleanDish);
 
     // BOUNDING BOX
     walls = new Group();
@@ -86,11 +52,9 @@ function setup() {
     rightWall = new walls.Sprite(width, height / 2, 1, 800);
 }  
 
-// function cleanDish() {
-//     virus1.remove();
-//     virus2.remove();
-//     virus3.remove();
-// }
+function cleanDish(player, food) {
+    food.remove();
+}
 
 function draw() {
     clear();
@@ -98,6 +62,7 @@ function draw() {
     background('grey');
 
     player.moveTowards(mouse);
+    
 
     //  TIMER
     HTMLCountdown = document.getElementById("countdown");
@@ -117,7 +82,15 @@ function draw() {
     //SCORE
     cleanPoints = score;
     HTMLCleanpoints.innerText = `Score: ${cleanPoints}`;
-    if (player.collide(virus1, getPoints)) cleanPoints++;
+
+     for (let i = 0; i < food.length; i++) {
+        if (player.collide(food[i])) {
+            cleanDish(player, food[i]);
+            cleanPoints++; // Increment the score when food is removed
+        }
+    }
+   
+    
 
     console.log(cleanPoints);
 
@@ -126,6 +99,8 @@ function draw() {
     circle(width / 2, height / 2, 600);
     fill("rgb(230,230,230)");
     circle(width / 2, height / 2, 450);
+
+   
 
 }
 
@@ -153,7 +128,7 @@ function draw() {
 //     }
 // }
 
-function getPoints() {
-    // score = +1
-    text("YAY!", width / 2, height / 2);
-}
+// function getPoints() {
+//     // score = +1
+//     text("YAY!", width / 2, height / 2);
+// }
