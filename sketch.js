@@ -26,32 +26,32 @@ function setup() {
     player.width = 123;
     player.height = 200;
     player.color = "#9C27B0";
-    // player.img = "images/hand.png";
+    player.img = "images/hand.png";
     player.x = x;
     player.y = y;
     player.rotationLock = true;
 
 
     // //FOOD SPRITES GROUP
-    for(i = 0; i < 10; i++){
-        food = new Group();
-        food.diameter = 30;
-        food.x = () => random(200, 800);
-        food.y = () => random(100, 500);
-        food.amount = 80;
+    // for(i = 0; i < 10; i++){
+    //     food = new Group();
+    //     food.diameter = 30;
+    //     food.x = () => random(200, 800);
+    //     food.y = () => random(100, 500);
+    //     food.amount = 80;
+    // }
+
+    //FOOD SPRITES
+    for (i = 0; i < 10; i++) {
+        virus1 = new Sprite(random(200, 800), random(100, 500), 50, 25);
+        virus1.color = "#F44336";
+
+        virus2 = new Sprite(random(width * 0.4, width * 0.6), 300, 30);
+        virus2.color = "#03A9F4";
+
+        virus3 = new Sprite(random(width * 0.4, width * 0.6), 300, 30, 50);
+        virus3.color = "#FFEB3B";
     }
-
-    // //FOOD SPRITES
-    // for (i = 0; i < 10; i++) {
-    //     virus1 = new Sprite(random(200, 800), random(100, 500), 50, 25);
-    //     virus1.color = "#F44336";
-
-    //     virus2 = new Sprite(random(width * 0.4, width * 0.6), 300, 30);
-    //     virus2.color = "#03A9F4";
-
-    //     virus3 = new Sprite(random(width * 0.4, width * 0.6), 300, 30, 50);
-    //     virus3.color = "#FFEB3B";
-
 
         // ROTATIONS
         //     if (random(2) < 1) {
@@ -76,25 +76,27 @@ function setup() {
         //     virus3.rotationSpeed = 3 * dir;
     // }
 
-    player.overlaps(virus1, cleanDish);
+    // player.overlaps(virus1, cleanDish);
 
     // BOUNDING BOX
     walls = new Group();
     walls.collider = "static";
-    ceiling = new walls.Sprite(width / 2, 0, 600, 1);
-    floor = new walls.Sprite(width / 2, height, 600, 1);
-    leftWall = new walls.Sprite(0, height / 2, 1, 600);
-    rightWall = new walls.Sprite(width, height / 2, 1, 600);
+    ceiling = new walls.Sprite(width / 2, 0, 1000, 1);
+    floor = new walls.Sprite(width / 2, height, 1000, 1);
+    leftWall = new walls.Sprite(0, height / 2, 1, 800);
+    rightWall = new walls.Sprite(width, height / 2, 1, 800);
 }  
 
-function cleanDish() {
-    virus1.remove();
-}
+// function cleanDish() {
+//     virus1.remove();
+//     virus2.remove();
+//     virus3.remove();
+// }
 
 function draw() {
     clear();
-    sink = loadImage('images/sink-bg.png');
-    background(sink);
+    // sink = loadImage('images/sink-bg.png');
+    background('grey');
 
     player.moveTowards(mouse);
 
