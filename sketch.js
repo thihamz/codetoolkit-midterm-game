@@ -13,6 +13,7 @@ let y = 600;
 let arcadeType;
 function preload() {
     arcadeType = loadFont("typeface/arcade-classic.ttf");
+
 }
 
 function setup() {
@@ -31,17 +32,15 @@ function setup() {
     player.y = y;
     player.rotationLock = true;
 
-
     // //FOOD SPRITES GROUP
-    // for(i = 0; i < 10; i++){
     //     food = new Group();
     //     food.diameter = 30;
     //     food.x = () => random(200, 800);
     //     food.y = () => random(100, 500);
     //     food.amount = 80;
-    // }
 
-    //FOOD SPRITES
+    
+    // FOOD SPRITES
     for (i = 0; i < 10; i++) {
         virus1 = new Sprite(random(200, 800), random(100, 500), 50, 25);
         virus1.color = "#F44336";
