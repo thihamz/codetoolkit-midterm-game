@@ -42,6 +42,7 @@ canvas {
     -webkit-text-stroke-width: 3px;
     -webkit-text-stroke-color: black;
     position: absolute;
+    width: 50%;
     font-family: arcadeType;
     font-size: 150px;
     line-height: 60%;
@@ -56,6 +57,7 @@ canvas {
     position: absolute;
     font-family: arcadeType;
     font-size: 150px;
+    width: 50%;
     line-height: 60%;
     top: 335px;
     left: 380px;

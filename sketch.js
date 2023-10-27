@@ -17,6 +17,7 @@ let x = 500;
 let y = 700;
 
 let arcadeType;
+
 function preload() {
     arcadeType = loadFont("typeface/arcade-classic.ttf");
     soundFormats('mp3');
@@ -64,9 +65,7 @@ function setup() {
     rightWall = new walls.Sprite(width, height / 2, 1, 800);
 }
 
-// function cleanDish(player, food) {
-//     food.remove();
-// }
+
 function cleanDish(player, foodItem) {
     // Remove the food item from the canvas
     let index = foodArray.indexOf(foodItem);
@@ -156,8 +155,3 @@ function keyPressed() {
         if (kb.presses("left")) player.rotateTo(-90, 10);
     }
 }
-
-// function getPoints() {
-//     // score = +1
-//     text("YAY!", width / 2, height / 2);
-// }
