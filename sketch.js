@@ -1,4 +1,4 @@
-let timeLimit = 5;
+let timeLimit = 8;
 let countDown;
 let gameOver;
 let score = 0;
@@ -10,7 +10,6 @@ let foodArray2 = []
 let winSound;
 let loseSound;
 let scrubSound;
-
 
 let speed = 5;
 let x = 500;
