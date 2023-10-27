@@ -70,7 +70,7 @@ function cleanDish(player, foodItem) {
     let index = foodArray.indexOf(foodItem);
     if (index !== -1) {
         foodArray.splice(index, 1);
-        foodItem.remove(); // Assuming you have a remove() method in your Sprite class
+        foodItem.remove();
         score++; // Increment the score
         scrubSound.play();
     }
@@ -79,9 +79,7 @@ function cleanDish(player, foodItem) {
 function draw() {
     clear();
     // sink = loadImage('images/sink-bg.png');
-
     // player.moveTowards(mouse);
-
 
     //TIMER
     HTMLCountdown = document.getElementById("countdown");
