@@ -27,21 +27,52 @@ function preload() {
     scrubSound = loadSound('sounds/scrubSound.mp3')
 }
 
+let sec = 0;
+let timerInterval = setInterval(() => {
+    sec++
+}, 1000)
+
+function gameSetup(state) {
+    // RESET SCORE
+    score = 0;
+
+
+    if (state === 'after') {
+        setTimeout( () => {
+            sec = 0
+            // FOOD SPRITES
+            for (i = 0; i < 2; i++) {
+                food = new Sprite(random(width * 0.4, width * 0.7), random(height * 0.3, height * 0.7), 40);
+                food.img = "images/ketchup.png"
+                food.color = "#F44336";
+                foodArray.push(food);
+                tint(255, 200); // Display at half opacity
+            }
+
+            HTMLYouwin.style.display = 'none'
+
+        }, 2000);
+
+    } else {
+        // FOOD SPRITES
+        for (i = 0; i < 2; i++) {
+            food = new Sprite(random(width * 0.4, width * 0.7), random(height * 0.3, height * 0.7), 40);
+            food.img = "images/ketchup.png"
+            food.color = "#F44336";
+            foodArray.push(food);
+            tint(255, 200); // Display at half opacity
+        }
+    }
+
+}
+
 function setup() {
     createCanvas(1000, 800);
 
     world.gravity.y = 0;
     world.gravity.x = 0;
 
-    // FOOD SPRITES
-    for (i = 0; i < 15; i++) {
-        food = new Sprite(random(width * 0.4, width * 0.7), random(height * 0.3, height * 0.7), 40);
-        food.img = "images/ketchup.png"
-        food.color = "#F44336";
-        foodArray.push(food);
-        tint(255, 200); // Display at half opacity
-    }
-
+    
     //PLAYER
     player = new Sprite();
     player.width = 100;
@@ -52,8 +83,8 @@ function setup() {
     player.y = y;
     player.rotationLock = true;
 
-
-    player.overlaps(food, cleanDish);
+    
+    gameSetup();
 
     // BOUNDING BOX
     walls = new Group();
@@ -76,10 +107,13 @@ function cleanDish(player, foodItem) {
     }
 }
 
+let levelCount = 1;
+
 function draw() {
     clear();
     // sink = loadImage('images/sink-bg.png');
     // player.moveTowards(mouse);
+    countDown = max(0, timeLimit - sec);
 
     //TIMER
     HTMLCountdown = document.getElementById("countdown");
@@ -87,11 +121,12 @@ function draw() {
     HTMLCleanpoints = document.getElementById("cleanpoints");
     HTMLYouwin = document.getElementById("youwin");
     let currentTime = int(millis() / 1000);
-
     // countDown = timeLimit - currentTime;
-    countDown = max(0, timeLimit - int(millis() / 1000));
-    HTMLCountdown.innerText = `Time: ${countDown}`;
-
+    
+    if (score !== 2) {
+        HTMLCountdown.innerText = `Time: ${countDown}`;
+    } else {
+    }
     //GAMEOVER
     if (countDown === 0) {
         HTMLGameover.innerText = `Game Over`;
@@ -99,11 +134,15 @@ function draw() {
         loseSound.play();
     }
 
-    //YOU WIN
-    if(score === 15){
-        HTMLYouwin.innerText = 'YOU WIN';
-        remove();
+    //NEXT LEVEL
+    if(score === 2){
+        HTMLCountdown.innerText = `Time: GO`;
+
+        HTMLYouwin.style.display = 'block'
+        levelCount++
+        HTMLYouwin.innerText = `LEVEL ${levelCount}`;
         cheerSound.play();
+        gameSetup('after');
     }
 
     //SCORE
