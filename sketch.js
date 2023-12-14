@@ -11,6 +11,10 @@ let winSound;
 let loseSound;
 let scrubSound;
 
+let pauseState = false;
+let gameState = true;
+let hasScored = false;
+
 let speed = 5;
 let x = 500;
 let y = 700;
@@ -33,15 +37,12 @@ let timerInterval = setInterval(() => {
 }, 1000)
 
 function gameSetup(state) {
-    // RESET SCORE
-    score = 0;
-
 
     if (state === 'after') {
         setTimeout( () => {
             sec = 0
             // FOOD SPRITES
-            for (i = 0; i < 2; i++) {
+            for (i = 0; i < 15; i++) {
                 food = new Sprite(random(width * 0.4, width * 0.7), random(height * 0.3, height * 0.7), 40);
                 food.img = "images/ketchup.png"
                 food.color = "#F44336";
@@ -50,12 +51,14 @@ function gameSetup(state) {
             }
 
             HTMLYouwin.style.display = 'none'
-
+            pauseState = false;
+            gameState = true
+            timeLimit--;
         }, 2000);
 
     } else {
         // FOOD SPRITES
-        for (i = 0; i < 2; i++) {
+        for (i = 0; i < 15; i++) {
             food = new Sprite(random(width * 0.4, width * 0.7), random(height * 0.3, height * 0.7), 40);
             food.img = "images/ketchup.png"
             food.color = "#F44336";
@@ -105,6 +108,7 @@ function cleanDish(player, foodItem) {
         score++; // Increment the score
         scrubSound.play();
     }
+    hasScored = true;
 }
 
 let levelCount = 1;
@@ -123,27 +127,33 @@ function draw() {
     let currentTime = int(millis() / 1000);
     // countDown = timeLimit - currentTime;
     
-    if (score !== 2) {
-        HTMLCountdown.innerText = `Time: ${countDown}`;
+    if (pauseState === true) {
+        HTMLCountdown.innerText = `Time: GO GO GO!!!`;
+
     } else {
+        HTMLCountdown.innerText = `Time: ${countDown}`;
+
     }
     //GAMEOVER
     if (countDown === 0) {
         HTMLGameover.innerText = `Game Over`;
+        HTMLYouwin.style.display = 'none';
         remove();
         loseSound.play();
     }
 
     //NEXT LEVEL
-    if(score === 2){
-        HTMLCountdown.innerText = `Time: GO`;
-
+    if(score % 15 === 0 && score !== 0 && gameState === true && hasScored === true){
+        hasScored = false;
+        pauseState = true
+        gameState = false;
         HTMLYouwin.style.display = 'block'
         levelCount++
         HTMLYouwin.innerText = `LEVEL ${levelCount}`;
         cheerSound.play();
         gameSetup('after');
-    }
+    } 
+
 
     //SCORE
     cleanPoints = score;
