@@ -21,6 +21,8 @@ let predictions = [];
 let thumb = [];
 let index = [];
 let ready = false;
+let indexX;
+let indexY;
 
 let speed = 5;
 let x = 500;
@@ -131,7 +133,12 @@ function modelReady() {
 
 function draw() {
     clear();
+    drawKeypoints();
 
+    if(ready){
+        console.log(indexX, indexY)
+    }
+    
     player.x = mouseX;
     player.y = mouseY;
     sink = loadImage('images/sink-bg.png');
@@ -190,7 +197,7 @@ function draw() {
     fill("rgb(230,230,230)");
     circle(width / 2, height / 2, 450);
 
-    drawKeypoints();
+    
 }
 
 function keyPressed() {
@@ -223,7 +230,8 @@ function drawKeypoints() {
         ellipse(index[0], index[1], 10, 10);
     }
     if (ready && thumb.length > 2 && index.length > 2) {
-        let distance = dist(thumb[0], thumb[1], index[0], index[1]);
+         indexX = index[0]
+         indexY = index[1]
         // console.log(distance)
         console.log(predictions);
     }
